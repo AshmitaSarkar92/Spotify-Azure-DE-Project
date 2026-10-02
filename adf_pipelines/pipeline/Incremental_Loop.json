@@ -4,7 +4,7 @@
 		"description": "load data incrementally from SQL db to datalake by looping",
 		"activities": [
 			{
-				"name": "ForEach1",
+				"name": "IncrementalLoop",
 				"type": "ForEach",
 				"dependsOn": [],
 				"userProperties": [],
@@ -184,11 +184,11 @@
 												"parameters": {
 													"container": "bronze",
 													"folder": {
-														"value": "@pipeline().parameters.table",
+														"value": "@item().table",
 														"type": "Expression"
 													},
 													"file": {
-														"value": "@concat(pipeline().parameters.table,'_',variables('current_var'))",
+														"value": "@concat(item().table,'_',variables('current_var'))",
 														"type": "Expression"
 													}
 												}

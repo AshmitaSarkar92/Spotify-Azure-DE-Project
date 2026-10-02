@@ -1,0 +1,7 @@
+{
+	"name": "Incremental_Ingestion",
+	"properties": {
+		"description": "load data incrementally from SQL db to datalake",
+		"annotations": []
+	}
+}

@@ -137,8 +137,10 @@ spotify_dab/
 |---|---|
 | Notebook setup (imports, custom `utils.transformations`) | ![Silver Setup](screenshots/spotify_databricks_ss/06-silver-notebook-setup-cells.png) |
 | `readStream` with Autoloader (`cloudFiles`) — schema evolution + checkpointing | ![Autoloader readStream](screenshots/spotify_databricks_ss/07-autoloader-readstream-output.png) |
+| Transformations — uppercase `user_name`, drop `_rescued_data`, dedupe on `user_id` | ![DimUser Transformations](screenshots/spotify_databricks_ss/07a-silver-dimuser-transformations-dedup.png) |
+| `writeStream` — append to Delta, `trigger(once=True)`, registered to Unity Catalog | ![DimUser writeStream](screenshots/spotify_databricks_ss/07b-silver-dimuser-writestream.png) |
 
-Autoloader (`cloudFiles` format) streams new Bronze parquet files into Silver, tracking processed files via a checkpoint directory (exactly-once processing) and automatically evolving the schema as new columns appear.
+Autoloader (`cloudFiles` format) streams new Bronze parquet files into Silver, tracking processed files via a checkpoint directory (exactly-once processing) and automatically evolving the schema as new columns appear. Each dimension is cleaned (column standardization, dropping Autoloader's `_rescued_data`, deduplication) and then written out with `trigger(once=True)` to a managed Silver Delta table — the same pattern repeats for `DimArtist`, `DimTrack`, `DimDate`, and `FactStream`.
 
 ### 5b. Reusable Utilities
 

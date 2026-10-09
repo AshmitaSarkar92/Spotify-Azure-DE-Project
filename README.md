@@ -8,7 +8,7 @@
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
 ![Jinja2](https://img.shields.io/badge/Jinja2-B41717?style=flat&logo=jinja&logoColor=white)
 
-An end-to-end Azure data platform built around a simulated Spotify dataset — ingestion with Azure Data Factory, incremental Bronze/Silver/Gold layering on ADLS Gen2, metadata-driven transformations with Jinja2, and a Slowly Changing Dimension (SCD Type 2) star schema built with Delta Live Tables on Databricks, deployed via Databricks Asset Bundles.
+An end-to-end Azure data platform built around a simulated Spotify dataset ingestion with Azure Data Factory, incremental Bronze/Silver/Gold layering on ADLS Gen2, metadata-driven transformations with Jinja2, and a Slowly Changing Dimension (SCD Type 2) star schema built with Delta Live Tables on Databricks, deployed via Databricks Asset Bundles.
 
 ## Project Overview
 

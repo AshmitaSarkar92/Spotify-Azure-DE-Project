@@ -14,7 +14,7 @@ An end-to-end Azure data platform built around a simulated Spotify dataset — i
 
 ### The Problem
 
-Data isn't static — new rows show up and old ones change, every day. A pipeline that reprocesses everything on every run, or breaks the moment the source adds a column, doesn't hold up once it's actually running.
+Data isn't static new rows show up and old ones change, every day. A pipeline that reprocesses everything on every run, or breaks the moment the source adds a column, doesn't hold up once it's actually running.
 
 ### The Solution
 

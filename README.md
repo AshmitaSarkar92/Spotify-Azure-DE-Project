@@ -2,11 +2,40 @@
 
 An end-to-end Azure data platform built around a simulated Spotify dataset — ingestion with Azure Data Factory, incremental Bronze/Silver/Gold layering on ADLS Gen2, metadata-driven transformations with Jinja2, and a Slowly Changing Dimension (SCD Type 2) star schema built with Delta Live Tables on Databricks, deployed via Databricks Asset Bundles.
 
+## Project Overview
+
+### The Problem
+
+Data isn't static — new rows show up and old ones change, every day. A pipeline that reprocesses everything on every run, or breaks the moment the source adds a column, doesn't hold up once it's actually running.
+
+### The Solution
+
+Process only what changed. Describe tables as metadata instead of hardcoding them. Keep history instead of overwriting it.
+
+| Technique | First principle |
+|---|---|
+| **Parameterized ADF pipeline** | One pipeline, driven by metadata — a new table is config, not code |
+| **Watermark-based CDC** | Only pull what changed since last run, never the whole table |
+| **Jinja2-parameterized SQL** | Describe a table once as data; let it generate its own SQL |
+| **Autoloader (`cloudFiles`)** | Process each file once; adapt to new columns automatically |
+| **Deduplication** | Streams can redeliver — never trust "once" without checking |
+| **SCD Type 2** | Keep every version of a row, not just the latest one |
+| **Keyless governance** | Identity grants access — no keys to leak |
+| **Run monitoring** | A failure you don't hear about isn't handled |
+
+Same rule everywhere: **the pipeline changes when the data changes — never when new data simply arrives.**
+
+### Why This Stands Out
+
+Every technique here was chosen to make the pipeline more efficient and more reliable, not to check a box. Incremental processing instead of reprocessing everything cuts runtime and cost as the dataset grows. Metadata-driven pipelines and SQL mean new sources are a config change, not new code. Managed-identity governance removes an entire class of credential risk. SCD Type 2 keeps history that would otherwise be lost on every overwrite. Run monitoring means a failure is caught the same day, not discovered weeks later. Together, these are the choices that keep a pipeline fast, safe, and maintainable as it scales — not just working once, but working well over time.
+
 ## Architecture Overview
 
-![Resource Group Overview](screenshots/spotify_adf_ss/01-resource-group-overview.png)
+![Pipeline Architecture](screenshots/spotify_adf_ss/00-pipeline-architecture-flowchart.png)
 
 All resources live in a single resource group (`RG-SpotifyProject`):
+
+![Resource Group Overview](screenshots/spotify_adf_ss/01-resource-group-overview.png)
 
 | Resource | Purpose |
 |---|---|
